@@ -1,0 +1,53 @@
+<html>
+
+
+<head>
+    
+    <style>
+        .white-space-pre {
+            white-space: pre-wrap;
+        }
+    </style>
+
+    <script type="text/javascript" src="./static/jquery-1.4.2.min.js"></script>
+    <script type="text/javascript" src="./static/socket.io.min.js"></script>
+    
+    <script type="text/javascript">
+        $(document).ready(function(){
+
+            const logger = $('#log');
+            let socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port);
+
+            // render server's data
+            socket.on('emit', function(msg){
+                let timestamp = msg.timestamp
+                delete msg.timestamp
+                // let _msg = JSON.stringify(msg) + '<br>';
+
+                let _msg = '<b>' + timestamp + '</b><br>' + msg.log + '<br>' 
+                logger.append(_msg);
+            });
+
+            // send msg back to server
+            $('form#broadcast').submit(function(event){
+                let _data = $('#broadcast_data').val();
+                socket.emit('broadcast_event', {data: _data});
+                return false;
+            });
+
+        });
+        
+    </script>
+
+</head>
+
+<body>
+    <h1>Proto Log Book</h1>
+
+    <textarea id='broadcast_data' style="width:400px;height:100px"></textarea>
+    <form id='broadcast' method="post">
+        <input type='submit' value="Log!" style="width:100px;height:100px">
+    </form>
+    <div id='log' class="white-space-pre"></div>
+</body>
+</html>
