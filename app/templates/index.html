@@ -30,8 +30,8 @@
 
             // send msg back to server
             $('form#broadcast').submit(function(event){
-                let _data = $('#broadcast_data').val();
-                socket.emit('broadcast_event', {data: _data});
+                let _log = $('#broadcast_data').val();
+                socket.emit('broadcast_event', {log: _log});
                 return false;
             });
 

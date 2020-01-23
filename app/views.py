@@ -19,12 +19,12 @@ def connect():
 
 @socket.on('broadcast_event')
 def log_via_websocket(message: dict):
-    _log(message.get('data', None))
+    _log(message.get('log', None))
     
 @app.route("/", methods=['POST'])
 def log_via_http():
     message : dict = request.get_json()
-    _log(message.get('data', None))
+    _log(message.get('log', None))
     return 'ack'
 
 def _log(msg : str):
