@@ -25,7 +25,7 @@
                 // let _msg = JSON.stringify(msg) + '<br>';
 
                 let _msg = '<b>' + timestamp + '</b><br>' + msg.log + '<br>' 
-                logger.append(_msg);
+                logger.prepend(_msg);
             });
 
             // send msg back to server
